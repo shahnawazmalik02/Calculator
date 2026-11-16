@@ -1,0 +1,61 @@
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg1:#070304;--bg2:#3a0a10;--panel:rgba(255,255,255,.05);--text:#fff1f2;--muted:#c79a9a;
+  --num:#2a1215;--op:#6b0f1a;--fn:#8a1020;--eq:#ff2a3d;--glow:255,50,70}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0;min-height:100%}
+body{font-family:"Segoe UI",system-ui,sans-serif;color:var(--text);
+  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg1));background-size:200% 200%;
+  animation:drift 14s ease-in-out infinite;display:flex;justify-content:center;padding:20px 14px}
+@keyframes drift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.wrap{width:100%;max-width:760px}
+h1{margin:0;font-size:26px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+.layout{display:flex;gap:14px;flex-wrap:wrap}
+.calc{flex:1 1 300px;background:var(--panel);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:14px}
+.history{flex:1 1 200px;min-height:200px;background:var(--panel);border:1px solid rgba(255,60,80,.5);border-radius:22px;padding:14px}
+.hh{display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px}
+.hh button{background:none;border:0;color:#ff8a95;cursor:pointer;font-size:13px}
+.screen{background:#0a0507;border-radius:16px;padding:14px 16px;text-align:right;margin-bottom:12px;overflow:hidden}
+#expr{font-size:13px;color:var(--muted);min-height:18px}
+#result{font-size:40px;font-weight:700;overflow-x:auto;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.btn{position:relative;overflow:hidden;border:0;border-radius:14px;height:54px;font-size:17px;font-weight:700;
+  color:var(--text);background:var(--num);cursor:pointer;transition:transform .12s ease,box-shadow .2s ease}
+.btn.op{background:var(--op)}.btn.fn{background:var(--fn)}
+.btn.equals{background:var(--eq);animation:breathe 2.6s ease-in-out infinite}
+.btn:hover{box-shadow:0 0 18px rgba(var(--glow),.45)}
+.btn:active{transform:scale(.93)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@keyframes breathe{0%,100%{box-shadow:0 0 6px rgba(var(--glow),.4)}50%{box-shadow:0 0 24px rgba(var(--glow),.9)}}
+.ripple{position:absolute;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.45);
+  transform:translate(-50%,-50%) scale(0);animation:ripple .55s ease-out forwards;pointer-events:none}
+@keyframes ripple{to{transform:translate(-50%,-50%) scale(10);opacity:0}}
+#result.pop{animation:pop .28s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:translateY(14px) scale(.9);opacity:0;filter:blur(4px)}to{transform:none;opacity:1;filter:blur(0)}}
+#result.shake{animation:shake .4s;color:#ff6b81}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.item{background:rgba(255,255,255,.06);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.item small{display:block;color:var(--muted);font-size:12px}
+.item b{font-size:18px}
+.item.new{animation:slideIn .4s ease-out}
+@keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+.empty{color:var(--muted);font-size:13px}
+body{background:#070304!important;animation:none!important}
+body::before{content:"";position:fixed;inset:-20%;z-index:-2;background:radial-gradient(40% 40% at 20% 30%,rgba(255,30,50,.5),transparent 70%),radial-gradient(35% 35% at 80% 25%,rgba(150,0,20,.5),transparent 70%),radial-gradient(45% 45% at 60% 85%,rgba(255,90,40,.3),transparent 70%);filter:blur(40px);animation:aurora 18s ease-in-out infinite alternate}
+@keyframes aurora{to{transform:translate(6%,-5%) rotate(25deg) scale(1.15)}}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.14) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(circle 200px at var(--mx,50%) var(--my,40%),#000,transparent);mask-image:radial-gradient(circle 200px at var(--mx,50%) var(--my,40%),#000,transparent)}
+.splash{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#070304;animation:splashOut .7s ease 1.9s forwards}
+.splash h1{margin:0;font-size:44px;color:#fff;animation:logoIn 1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes logoIn{from{opacity:0;letter-spacing:.6em;filter:blur(10px)}to{opacity:1;letter-spacing:0;filter:blur(0)}}
+.splash .bar{width:150px;height:3px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden}
+.splash .bar::after{content:"";display:block;height:100%;width:100%;background:#ff2a3d;transform:translateX(-100%);animation:load 1.6s ease-in-out .2s forwards}
+@keyframes load{to{transform:translateX(0)}}
+@keyframes splashOut{to{opacity:0;visibility:hidden;transform:scale(1.12)}}
+.calc,.history{opacity:0;animation:rise .8s cubic-bezier(.2,.8,.2,1) 2.1s forwards}
+.history{animation-delay:2.35s}
+@keyframes rise{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:none}}
+.btn{opacity:0;animation:btnIn .45s cubic-bezier(.2,1.4,.4,1) forwards;animation-delay:calc(2.3s + var(--i,0) * 45ms)}
+@keyframes btnIn{from{opacity:0;transform:translateY(18px) scale(.7)}to{opacity:1}}
+.btn.equals{animation:btnIn .45s cubic-bezier(.2,1.4,.4,1) forwards,breathe 2.6s ease-in-out 3.5s infinite;animation-delay:calc(2.3s + var(--i,0) * 45ms),3.5s}
+.replay{margin-top:12px;background:none;border:1px solid rgba(255,255,255,.25);color:var(--text);border-radius:10px;padding:8px 14px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.splash{display:none}.calc,.history,.btn{opacity:1!important}}
